@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="pda_calculator.css">
+    <title>
+        Calculator
+    </title>
+</head>
+<body>
+    <nav>
+      <ul>
+          <li><a href= "pda_calculator.html">Homepage</a></li>
+          <li><a href="calculator.html">Calculation</a></li>
+          <li><a href="note.html">Note-taking</a></li>
+          <li><a href="about_us">About Us</a></li>
+      </ul>
+    </nav>
+  <h1>BMI Calculator</h1>
+
+  <label for="weight">Enter Weight (in kg): </label>
+  <input type="number" id="weight" placeholder="Enter weight in kg"><br>
+
+  <label for="height">Enter Height (in meters): </label>
+  <input type="number" id="height" placeholder="Enter height in meters"><br>
+
+  <button onclick="calculateBMI()">Calculate BMI</button>
+
+  <p id="result"></p>
+
+  <script>
+      function calculateBMI() {
+          // Get user input
+          var weight = document.getElementById("weight").value;
+          var height = document.getElementById("height").value;
+
+          // Validate input
+          if (weight === "" || height === "") {
+              alert("Please enter both weight and height.");
+              return;
+          }
+
+          // Convert input to numbers
+          weight = parseFloat(weight);
+          height = parseFloat(height);
+
+          // Check for valid numbers
+          if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+              alert("Please enter valid numbers for weight and height.");
+              return;
+          }
+
+          // Calculate BMI
+          var bmi = weight / (height * height);
+
+          // Display the result
+          document.getElementById("result").innerHTML = "Your BMI is: " + bmi.toFixed(2);
+      }
+  </script>
+</body>
+</html>
