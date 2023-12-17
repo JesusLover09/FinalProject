@@ -1,25 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Function to load Word document
-    function loadWordDocument() {
-        const wordDocumentUrl = 'path/to/your/word/document.docx';
+let currentDocument;
 
-        // Open the document in a new tab/window
-        window.open(wordDocumentUrl, '_blank');
+function loadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const editor = document.getElementById('editor');
 
-        console.log('Loading Word document...');
-    }
+  const file = fileInput.files[0];
 
-    // Function to load Excel sheet
-    function loadExcelSheet() {
-        const excelDocumentUrl = 'path/to/your/excel/document.xls';
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      editor.innerHTML = e.target.result;
+      currentDocument = file.name;
+    };
+    reader.readAsText(file);
+  } else {
+    alert('Please select a file.');
+  }
+}
 
-        // Open the document in a new tab/window
-        window.open(excelDocumentUrl, '_blank');
+function saveFile() {
+  const editor = document.getElementById('editor');
 
-        console.log('Loading Excel document...');
-    }
+  if (currentDocument) {
+    const content = editor.innerHTML;
+    const blob = new Blob([content], { type: 'text/html' });
+    const link = document.createElement('a');
 
-    // Call functions to load documents when needed
-    loadWordDocument();
-    loadExcelSheet();
-});
+    link.href = URL.createObjectURL(blob);
+    link.download = currentDocument;
+    link.click();
+  } else {
+    alert('No document loaded.');
+  }
+}
